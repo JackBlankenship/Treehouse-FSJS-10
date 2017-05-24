@@ -1,0 +1,18 @@
+p
+	label(for="book_id") Book 
+		select(id="book_id" name="book_id")
+			each book in books
+				option(value=book.id)= book.title
+p
+	label(for="patron_id") Patron 
+		select(id="patron_id" name="patron_id")
+			each patron in patrons
+				option(value=patron.id)= patron.first_name + ' ' + patron.last_name
+p
+	label(for='loaned_on') Loanded on: 
+		input(type='text', name='loaned_on' id='loaned_on' value= loan.loaned_on )
+p
+	label(for='return_by') Return by: 
+		input(type='text', name='return_by' id='return_by' value= loan.return_by  )
+p
+	input(type="submit" value=type)

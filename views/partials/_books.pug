@@ -1,0 +1,8 @@
+tbody#item.item
+	each row in rows
+		tr.book
+			td.item-name
+				a(href='/' + table + '/Detail/' + row.id )=  row.title  
+			td= row.author 	
+			td= row.genre 	
+			td= row.first_published 

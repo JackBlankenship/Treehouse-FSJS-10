@@ -1,0 +1,9 @@
+doctype html
+html(lang="en")
+	include ./partials/_head.pug
+	body
+		include ./partials/_nav.pug
+		block content
+		if type == "Display"
+			script(src='http://code.jquery.com/jquery-3.1.1.min.js')
+			script(src='/static/javascripts/app.js')

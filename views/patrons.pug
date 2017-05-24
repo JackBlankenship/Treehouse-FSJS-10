@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	case type
+		when "Update"
+			h1 #{singular}: #{title}
+			include ./partials/_errors.pug
+			form(action="/Patrons/" + patron.id + "?_method=PUT", method="post")
+				include ./partials/_patron.pug
+		when "New"
+			h1 New #{title}
+			include ./partials/_errors.pug
+			form(action="/Patrons/", method="post")
+				include ./partials/_patron.pug
+		when "Display"
+			h1#table #{title}
+			include ./partials/_createnew.pug
+			table
+				include ./partials/_thead.pug
+				include ./partials/_patrons.pug
+		default
+			h1 #{title}
+			include ./partials/_createnew.pug
+			table
+				include ./partials/_thead.pug
+				include ./partials/_patrons.pug
+
+	if type == "Update"
+		include ./partials/_loanHistory.pug

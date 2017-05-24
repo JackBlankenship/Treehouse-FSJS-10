@@ -1,0 +1,28 @@
+extends layout
+
+block content
+	h1 #{title}
+	p Welcome to #{title}
+	ul
+		li Books
+			ul
+				li 
+					a(href='/Books/New') New Book
+				li
+					a(href='/Books/All') List All
+				li
+					a(href='/Books/Overdue') List Overdue
+				li
+					a(href='/Books/Checked') List Checked Out
+		li Patrons
+			ul
+				li 
+					a(href='/Patrons/New') New Patron
+				li
+					a(href='/Patrons/All') List All
+		li Loans
+			ul
+				li
+					a(href='/Loans/New') New Loan
+				li
+					a(href='/Loans/All') List All

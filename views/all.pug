@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	h1#table #{title}
+
+	if subNav == "true"
+		include ./partials/_createnew.pug
+
+	if filterBar == "true"
+		include ./partials/_filter.pug
+
+	table
+		case table 
+			when "Patrons"
+				include ./partials/_thead.pug
+				include ./partials/_patrons.pug
+			when "Loans"
+				include ./partials/_loanHistory.pug
+			when "Books"
+				include ./partials/_thead.pug
+				include ./partials/_books.pug
+			default
+				include ./partials/_thead.pug
+				include ./partials/_books.pug
+

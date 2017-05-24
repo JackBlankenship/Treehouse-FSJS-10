@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	case type
+		when "Display"
+			h1#table #{table}
+			include ./partials/_createnew.pug
+			include ./partials/_filter.pug
+		when "Create New Loan"
+			h1 New #{table}
+			form(action="/Loans/", method="post")
+				include ./partials/_loan.pug
+		default
+			h1#table #{table}
+			include ./partials/_createnew.pug
+			include ./partials/_filter.pug
+
+	if type == "Display"
+		include ./partials/_loanHistory.pug

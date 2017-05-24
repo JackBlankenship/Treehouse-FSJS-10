@@ -1,0 +1,9 @@
+tbody#item.item
+	each row in rows
+		tr.patron
+			td.item-name
+				a(href='/Patrons/Detail/' + row.id )=  row.first_name + ' ' + row.last_name  
+			td= row.address 	
+			td= row.email 	
+			td= row.library_id
+			td= row.zip_code 
