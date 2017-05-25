@@ -72,7 +72,6 @@ router.post('/:id', function (req, res, next) {
 router.get('/Detail/:id', function (req, res, next) {
 	let patronId = req.params.id;
 	let headings = [{ name: "Book"}, {name: "Patron"}, {name: "Loaned on"},{name: "Return by"}, {name: "Returned on"}, {name: "Action"}];
-	console.log("Patron detail:" + patronId);
 	Patrons.findById( patronId ).then( function (patron) {
 		 Loans.findAll({
 			//attributes: [ 'id', 'book_id', 'patron_id', 'loaned_on', 'return_by', 'returned_on', `Book`.`title`, `Patron`.`first_name`, `Patron`.`last_name`],

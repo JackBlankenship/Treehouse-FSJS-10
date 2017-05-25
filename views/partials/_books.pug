@@ -1,8 +1,9 @@
 tbody#item.item
 	each row in rows
 		tr.book
-			td.item-name
+			td
 				a(href='/' + table + '/Detail/' + row.id )=  row.title  
 			td= row.author 	
 			td= row.genre 	
-			td= row.first_published 
+			td= row.first_published
+			td.item-name.hidden= row.title + row.author + row.genre + row.first_published 

@@ -57,7 +57,6 @@ router.get('/Return/:loanId/:bookId', function (req, res, next) {
 	let loanID = req.params.loanId;
 	let dateToday = new Date();
 	let today = dateToday.toISOString().substr(0,10);
-	console.log("Book:" + bookID + " Loan:" + loanID);
 	Loans.findById( loanID ).then(function(loans) {
 		Books.findById( bookID ).then(function(books) {
 			Patrons.findById ( loans.dataValues.patron_id ).then(function(patrons){ 
@@ -119,7 +118,6 @@ router.get("/Detail/:data", function (req, res, next) {
 	let bookID = req.params.data;
 	let headings = [{ name: "Book"}, {name: "Patron"}, {name: "Loaned on"},{name: "Return by"}, {name: "Returned on"}, {name: "Action"}];
 	Books.findById( bookID ).then(function(books) {
-		console.log("Detail route:" + bookID);
 		 Loans.findAll({
 			//attributes: [ 'id', 'book_id', 'patron_id', 'loaned_on', 'return_by', 'returned_on', `Book`.`title`, `Patron`.`first_name`, `Patron`.`last_name`],
 			include: [{ 
@@ -131,8 +129,6 @@ router.get("/Detail/:data", function (req, res, next) {
 				 }],
 			where: [ {book_id: bookID} ]
 		}).then(function(loans) {
-			console.log(loans)
-			console.log(books)
 			res.render('books', { title: books.dataValues.title, headings: headings, book: books, table: "Books", singular: "Book", type: "Update", loans: loans })
 		});
 	});

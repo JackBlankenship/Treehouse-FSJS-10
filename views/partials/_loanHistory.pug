@@ -4,7 +4,7 @@ table
 	tbody#item.item
 		each loan in loans
 			tr
-				td.item-name
+				td
 					a(href='/Books/Detail/' + loan.book_id)= loan.Book.title
 				td
 					a(href='/Patrons/Detail/' + loan.patron_id)= loan.Patron.first_name + ' ' + loan.Patron.last_name
@@ -14,3 +14,4 @@ table
 				unless loan.returned_on
 					td
 						a.button(href='/Books/Return/' + loan.id + '/' + loan.book_id) Return Book
+				td.item-name.hidden= loan.Book.title + loan.Patron.first_name + loan.Patron.last_name + loan.loaned_on + loan.return_by

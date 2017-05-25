@@ -27,11 +27,11 @@ router.get('/all', function (req, res, next) {
 });
 
 router.get('/new', function (req, res, next) {
+	let checkedBooks = [];
+	/* This is a very inefficient way of finding available books
 	Books.findAll({
-
 	}).then(function (books) {
 
-		let availableBooks = [];
 		for (let i=0; i < books.length; i++) {
 			// Find all loans where a book is still checked out.
 			Loans.findAll({ where: { book_id: books[i].dataValues.id, returned_on:  null } }).then( function (loan) {
@@ -42,18 +42,26 @@ router.get('/new', function (req, res, next) {
 				}		// endIF
 			})			// end Loan.findAll .then
 		}				// end for loop
-		let dateToday = new Date();
-		let today = dateToday.toISOString().substr(0,10);
-		let inSeven = new Date();
-		inSeven.setDate(dateToday.getDate() + 7);
-		let dueDate = inSeven.toISOString().substr(0,10); 
-		let thisLoan = {id: "", book_id: "", patron_id: "", loaned_on: today, return_by: dueDate, returned_on: ""};
-		Patrons.findAll({}).then( function (patrons) {
-			res.render('loan', { title: "Loans", books: availableBooks, patrons: patrons, loan: thisLoan, table: "Loans", singular: "Loan", type: "Create New Loan" });
-		});
-	});
-});
-//TODO update the below POST prpocess for new loans from the book copy
+	*/
+	Loans.findAll({ where: { returned_on:  null } })		// get all the books still on loan
+	.then( function (onloan) {
+		for (let i=0; i < onloan.length; i++) {				// build the array
+			checkedBooks.push(onloan[i].book_id);
+		};
+		Books.findAll({ where : { id: { $notIn: checkedBooks}}}).then( function (availableBooks) {		// exclude checked out.
+			let dateToday = new Date();
+			let today = dateToday.toISOString().substr(0,10);
+			let inSeven = new Date();
+			inSeven.setDate(dateToday.getDate() + 7);
+			let dueDate = inSeven.toISOString().substr(0,10); 
+			let thisLoan = {id: "", book_id: "", patron_id: "", loaned_on: today, return_by: dueDate, returned_on: ""};
+			Patrons.findAll({}).then( function (patrons) {
+				res.render('loan', { title: "Loans", books: availableBooks, patrons: patrons, loan: thisLoan, table: "Loans", singular: "Loan", type: "Create New Loan" });
+			});		// end Patrons
+		});			// end Books Theoretically I could un nest Books and Patrons and use Promise.all
+	});				// end Loans
+});					// end Route
+
 // Create the new Loan, then route to the detail page.
 router.post('/', function (req, res, next) {
 	Loans.create(req.body).then(function(loans) {

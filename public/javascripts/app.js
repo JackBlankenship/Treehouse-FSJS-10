@@ -8,6 +8,12 @@ var pageCount = 1;
 var itemCount = 1;
 var itemsPerPage = 5;
 var pageinates = 0;
+var partialItemsArray = [];
+var thisHTML = '';
+var startingItem = 0;
+var endingItem = 0;
+var itemName = '';
+var partialItemsArray = [];
 
 //* --------------------- *//
 //* DOM variables         *//
@@ -24,7 +30,7 @@ const searchHTML = '<div class="list-search"><input placeholder="Search for ' + 
 var pageinateHTML = '<div class="pagination"> <ul> <li><a class="active" href="#">1</a> </li></ul></div>';
 
 // get all the data from the html regarding items and put into an array;
-var $itemsName = $(".item-name a");		// create a item name array to be used below.
+var $itemsName = $(".item-name");		// create a item name array to be used below.
 var $item = $(classItem).children();		// itemsDetailsAll
 
 //* --------------------- *//
@@ -53,9 +59,9 @@ function setPaginateButtons(thisArray) {
 //Given a starting page number build the corresponding HTML and load it.
 // const setHTMLSection = (pageNumber, thisItemsArray) => {
 function setHTMLSection(pageNumber, thisItemsArray) {		// to make the exceeds, I will need to pass in an array also. because the search feature will build a temp of matcing names.
-	var startingItem = (pageNumber - 1) * itemsPerPage;
-	var endingItem = startingItem + itemsPerPage;
-	var thisHTML = '';
+	startingItem = (pageNumber - 1) * itemsPerPage;
+	endingItem = startingItem + itemsPerPage;
+	thisHTML = '';
 
 	// account for a partial page.
 	if (endingItem > thisItemsArray.length) {		
@@ -70,8 +76,8 @@ function setHTMLSection(pageNumber, thisItemsArray) {		// to make the exceeds, I
 }
 
 function realTimeSearch() {	
-	var partialItemsArray = [];										// empty out the array
-	var itemName = $("input").val().toLowerCase();					// get the item name search value
+	partialItemsArray = [];										// empty out the array
+	itemName = $("input").val().toLowerCase();					// get the item name search value
 	for (var l = 0; l < fullItemsArray.length; l++) {				// look at the entire array
 		if (fullItemsArray[l]["Name"].indexOf(itemName) >= 0) {		// if a match is found
 			partialItemsArray.push(fullItemsArray[l]);				// add to this array
@@ -110,15 +116,19 @@ setPaginateButtons(fullItemsArray);				// create the buttons area from fullItems
 $('.pagination').click( function () {
 	if (event.target.tagName == "A") { 
 		$('.pagination li a').removeClass("active");						// remove the old class active from prior button
-		setHTMLSection(event.target.innerHTML, fullItemsArray);			// call setHTMLSection to build the page.
+		if (itemName.length > 0 ) {
+			setHTMLSection(event.target.innerHTML, partialItemsArray)
+		} else {
+			setHTMLSection(event.target.innerHTML, fullItemsArray);			// call setHTMLSection to build the page.
+		}
 		$(event.target).addClass("active");									// set this button to class active to highlight.
 	}
 });
 
 // event listener to respond to "Search" button clicks
 $('.list-search button').click( function(){
-	var partialItemsArray = [];										// empty out the array
-	var itemName = $("input").val();									// get the item name search value
+	partialItemsArray = [];										// empty out the array
+	itemName = $("input").val().toLowerCase();									// get the item name search value
 	for (var l = 0; l < fullItemsArray.length; l++) {				// look at the entire array
 		if (fullItemsArray[l]["Name"].indexOf(itemName) >= 0) {	// if a match is found
 			partialItemsArray.push(fullItemsArray[l]);			// add to this array
