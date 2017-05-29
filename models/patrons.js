@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataTypes) {
        validate: {
         notEmpty: {
           msg: "First Name is required"
+        },
+        len: {
+          args:[5, 35],
+          msg: "First name must be between 5 and 35 characters"
         }
       }
     }, 
@@ -20,7 +24,12 @@ module.exports = function(sequelize, DataTypes) {
        validate: {
         notEmpty: {
           msg: "Last Name is required"
+        },
+        len: {
+          args:[5, 35],
+          msg: "Last name must be between 5 and 35 characters"
         }
+
       }
     }, 
     address: {
@@ -28,7 +37,12 @@ module.exports = function(sequelize, DataTypes) {
        validate: {
         notEmpty: {
           msg: "Address is required"
+        },
+        len: {
+          args:[5, 35],
+          msg: "Address must be between 5 and 35 characters"
         }
+
       }
     }, 
     email: {

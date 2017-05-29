@@ -7,15 +7,26 @@ body {
 a {
   color: #00B7FF;
 }
+nav {
+  border-bottom: 2px solid #4a5aa1;
+}
+
+nav ul li {
+  display: inline-block;
+  list-style: none;
+  padding-left: 6px;
+}
+
 .navbar ul {
 	float: left;
 }
 .list-search {
-	float: right; 	
+	float: right; 
+  padding: 21px;	
 }
 .list-search input{
       border-radius: 5px;
-      border: 1px solid #eaeaea;
+      border: 1px solid #4a5aa1;
       padding: 8px 15px;
       font-size: 14px;
 }
@@ -32,13 +43,22 @@ input[type='text']
 .hidden {
   display: none;
 }
+a:hover {
+  color: maroon;
+}
+tr:hover {
+  background-color: #ddd;
+}
+thead tr {
+  background-color: #ccc;
+}
 .list-search button{
       border-radius: 5px;
       border: 1px solid #eaeaea;
       padding: 8px 15px;
       font-size: 14px;
-      background-color: #4ba6c3;
-      color: #fff
+      background-color: #4aa267;
+      color: #e4e8f7;
 }
 
 .pagination{

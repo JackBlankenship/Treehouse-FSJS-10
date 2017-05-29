@@ -10,6 +10,9 @@ module.exports = function(sequelize, DataTypes) {
     book_id: {
       type: DataTypes.INTEGER,
       validate: {
+        notEmpty: {
+          msg: "Book to loan is required"
+        },
         isInt: {
           msg: "Must be a valid number"
         }
@@ -17,7 +20,10 @@ module.exports = function(sequelize, DataTypes) {
     }, 
     patron_id: {
       type: DataTypes.INTEGER,
-      validate: {
+      validate: {        
+        notEmpty: {
+          msg: "Patron is required"
+        },
         isInt: {
           msg: "Must be a valid number"
         }
@@ -26,6 +32,9 @@ module.exports = function(sequelize, DataTypes) {
     loaned_on: {
       type: DataTypes.DATE,
       validate: {
+        notEmpty: {
+          msg: "Loaned on date required"
+        },
         isDate: {
           msg: "Must be a date format"
         }
@@ -34,6 +43,9 @@ module.exports = function(sequelize, DataTypes) {
     return_by: {
       type: DataTypes.DATE,
       validate: {
+        notEmpty: {
+          msg: "Return by date required"
+        },
         isDate: {
           msg: "Must be a date format"
         }

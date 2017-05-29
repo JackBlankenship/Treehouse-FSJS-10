@@ -27,13 +27,17 @@ router.post('/', function (req, res, next) {
 	Patrons.create(req.body).then(function(patrons) {
 		res.redirect("/Patrons/All");
 	}).catch(function (error) {
-		if ((error.name === "SequelizeValidationError") || (error.name === "SequelizeUniqueConstraintError")) {
+		if ((error.name === "SequelizeValidationError") || (error.name === "SequelizeUniqueConstraintError")) {  
 			res.render("patrons", {title: "Patron", type: "New", patron: Patrons.build(req.body), errors: error.errors });
+		} else if (error.name === "SequelizeTimeoutError") {
+			let errors = [ { message: error.message}];
+			res.render("patrons", {title: "Patron", type: "New", patron: Patrons.build(req.body), errors: errors });
 		} else {
 			throw error;
 		}		
 	}).catch(function (error) {
-		res.send(500, error)
+		res.status(500).send(error) 
+//		res.send(500, error)
 	});
 });
 
@@ -43,7 +47,7 @@ router.post('/:id', function (req, res, next) {
 		if (patron) {
 			return patron.update(req.body);
 		} else {
-			res.send(404);
+			res.status(404);
 		}
 	}).then (function (book) {
 		res.redirect("/Patrons/All");

@@ -8,6 +8,7 @@ block content
 			include ./partials/_filter.pug
 		when "Create New Loan"
 			h1 New #{table}
+			include ./partials/_errors.pug
 			form(action="/Loans/", method="post")
 				include ./partials/_loan.pug
 		default

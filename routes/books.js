@@ -71,13 +71,17 @@ router.post('/', function (req, res, next) {
 	Books.create(req.body).then(function(books) {
 		res.redirect("/Books/All");
 	}).catch(function (error) {
-		if ((error.name === "SequelizeValidationError") || (error.name === "SequelizeUniqueConstraintError")) {
+		if ((error.name === "SequelizeValidationError") || (error.name === "SequelizeUniqueConstraintError") ) {
 			res.render("books", {title: "New Book", headings: headings, type: "Create New Book", book: Books.build(req.body), errors: error.errors });
+		} else if ( error.name === "SequelizeTimeoutError") {
+			let errors = [ { message: error.message}];
+			res.render("books", {title: "New Book", headings: headings, type: "Create New Book", book: Books.build(req.body), errors: errors });
 		} else {
 			throw error;
 		}		
 	}).catch(function (error) {
-		res.send(500, error)
+		res.status(500).send(error) 
+		//res.send(500, error)
 	});
 });
 
@@ -87,7 +91,7 @@ router.post("/:id", function (req, res, next) {
 		if (book) {
 			return book.update(req.body);
 		} else {
-			res.send(404);
+			res.status(404);
 		}
 	}).then (function (book) {
 		res.redirect('/Books/All');
@@ -107,7 +111,7 @@ router.post("/:id", function (req, res, next) {
 					 }],
 				where: [ {book_id: bookID} ]
 			}).then(function (loans) {
-				res.render('books', { title: books.dataValues.title, headings: headings, book: book, table: "Books", singular: "Book", type: "Update", loans: loans, errors: error.errors })
+				res.render('books', { title: book.dataValues.title, headings: headings, book: book, table: "Books", singular: "Book", type: "Update", loans: loans, errors: error.errors })
 			});
 		};	// end if
 	});		// end catch

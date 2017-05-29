@@ -10,9 +10,9 @@ p
 				option(value=patron.id)= patron.first_name + ' ' + patron.last_name
 p
 	label(for='loaned_on') Loanded on: 
-		input(type='text', name='loaned_on' id='loaned_on' value= loan.loaned_on )
+		input(type='text', name='loaned_on' id='loaned_on' class='loaned_on' value= loan.loaned_on )
 p
 	label(for='return_by') Return by: 
-		input(type='text', name='return_by' id='return_by' value= loan.return_by  )
+		input(type='text', name='return_by' id='return_by' class='return_by' value= loan.return_by  )
 p
 	input(type="submit" value=type)

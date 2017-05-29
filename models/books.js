@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataTypes) {
        validate: {
         notEmpty: {
           msg: "Title is required"
+        },
+        len: {
+          args:[5, 100],
+          msg: "Title must be at least 5 characters"
         }
       }
     }, 
@@ -20,6 +24,10 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         notEmpty: {
           msg: "Author is required"
+        },
+        len: {
+          args:[5, 50],
+          msg: "Author must be at least 5 characters"
         }
       }
     }, 
@@ -28,6 +36,10 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         notEmpty: {
           msg: "Genre is required"
+        },
+        len: {
+          args:[5, 25],
+          msg: "Genre must be at least 5 characters"
         }
       }
     }, 
